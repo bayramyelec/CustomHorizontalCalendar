@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		54F0572F2D40D362009C7CE7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54F0572E2D40D362009C7CE7 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		54F056D92D3FB0DF009C7CE7 /* CustomHorizontalCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomHorizontalCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54F0572F2D40D362009C7CE7 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = CustomHorizontalCalendar;
 			packageProductDependencies = (
+				54F0572E2D40D362009C7CE7 /* SnapKit */,
 			);
 			productName = CustomHorizontalCalendar;
 			productReference = 54F056D92D3FB0DF009C7CE7 /* CustomHorizontalCalendar.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 54F056D02D3FB0DF009C7CE7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				54F0572D2D40D362009C7CE7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 54F056DA2D3FB0DF009C7CE7 /* Products */;
 			projectDirPath = "";
@@ -337,6 +346,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		54F0572D2D40D362009C7CE7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54F0572E2D40D362009C7CE7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54F0572D2D40D362009C7CE7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 54F056D12D3FB0DF009C7CE7 /* Project object */;
 }
