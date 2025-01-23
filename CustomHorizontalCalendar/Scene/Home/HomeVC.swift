@@ -73,6 +73,8 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        closeKeyboard()
+        setupKeyboardObservers()
     }
     
     // MARK: Funcs
@@ -215,6 +217,7 @@ class HomeVC: UIViewController {
         self.taskTitle.text = ""
         self.taskDescription.text = ""
         closeSheet()
+        closeKey()
     }
     
     
@@ -311,3 +314,35 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension HomeVC {
+    
+    private func closeKeyboard(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKey))
+        sheetView.addGestureRecognizer(tap)
+    }
+    
+    @objc func closeKey(){
+        view.endEditing(true)
+    }
+    
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide() {
+        UIView.animate(withDuration: 0.3) {
+            self.view.transform = .identity
+        }
+    }
+    
+}
