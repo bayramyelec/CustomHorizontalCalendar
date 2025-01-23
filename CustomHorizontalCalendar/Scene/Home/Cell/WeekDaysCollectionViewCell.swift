@@ -46,7 +46,7 @@ class WeekDaysCollectionViewCell: UICollectionViewCell {
     func setup(){
         contentView.layer.borderColor = UIColor.white.cgColor
         contentView.layer.borderWidth = 1
-        contentView.layer.cornerRadius = 10
+        contentView.layer.cornerRadius = 20
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(weekDayLabel1)
         stackView.addArrangedSubview(weekDayLabel2)

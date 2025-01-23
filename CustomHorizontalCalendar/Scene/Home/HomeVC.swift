@@ -12,6 +12,15 @@ class HomeVC: UIViewController {
     
     // MARK: Variables
     
+    private let notesYetLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.textAlignment = .center
+        label.text = "No notes yet"
+        return label
+    }()
+    
     private let weekdaysCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -68,12 +77,19 @@ class HomeVC: UIViewController {
     
     // MARK: Funcs
     
-    private func setupUI() {
-        view.backgroundColor = .black
-        
-        navigationItem.title = "Today"
+    private func setupNavigationBar() {
+        navigationItem.title = "\(viewModel.formattedDate(date: viewModel.currentDay, format: "MMMM")) \(viewModel.formattedDate(date: viewModel.currentDay, format: "dd"))"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    }
+    
+    private func setupUI() {
+        
+        notesYetController()
+        
+        view.backgroundColor = .black
+        
+        setupNavigationBar()
         
         view.addSubview(weekdaysCollectionView)
         weekdaysCollectionView.delegate = self
@@ -108,6 +124,19 @@ class HomeVC: UIViewController {
         
         setupSheetView()
         
+        view.addSubview(notesYetLabel)
+        notesYetLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+    }
+    
+    private func notesYetController(){
+        if viewModel.filteredList.isEmpty{
+            notesYetLabel.isHidden = false
+        } else if !viewModel.filteredList.isEmpty{
+            notesYetLabel.isHidden = true
+        }
     }
     
     private func setupSheetView(){
@@ -181,6 +210,8 @@ class HomeVC: UIViewController {
         viewModel.taskList.append(item)
         viewModel.filteredTasks()
         taskTableView.reloadData()
+        setupNavigationBar()
+        notesYetController()
         self.taskTitle.text = ""
         self.taskDescription.text = ""
         closeSheet()
@@ -199,7 +230,7 @@ class HomeVC: UIViewController {
     
     
     @objc func addTaskButtonTapped(){
-        let targetHeight = isShow ? 0 : screenWidth / 1.5 // hedef yüksekliği ayarlıyoruz
+        let targetHeight = isShow ? 0 : screenWidth / 1.5
         UIView.animate(withDuration: 0.2, animations: {
             if let heightConstraint = self.sheetView.constraints.first(where: { $0.firstAttribute == .height }) {
                 heightConstraint.constant = targetHeight
@@ -229,7 +260,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.backgroundColor = viewModel.isToday(date: date) ? .white : .black
         cell.weekDayLabel1.textColor = viewModel.isToday(date: date) ? .black : .white
         cell.weekDayLabel2.textColor = viewModel.isToday(date: date) ? .black : .white
-        cell.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 20
         return cell
     }
     
@@ -244,6 +275,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         viewModel.currentDay = date
         collectionView.reloadData()
         taskTableView.reloadData()
+        notesYetController()
+        setupNavigationBar()
     }
     
 }
